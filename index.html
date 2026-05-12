@@ -226,73 +226,6 @@
             position: relative;
         }
 
-        .video-placeholder {
-            width: 100%;
-            aspect-ratio: 16/9;
-            background: linear-gradient(135deg, #f9c6d0 0%, #e8d5f5 100%);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 1rem;
-            color: var(--acento);
-        }
-
-        .video-placeholder .play-icon {
-            width: 72px;
-            height: 72px;
-            background: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 20px rgba(201, 99, 122, 0.3);
-            cursor: pointer;
-            transition: transform 0.2s;
-        }
-
-        .video-placeholder .play-icon:hover {
-            transform: scale(1.08);
-        }
-
-        .video-placeholder .play-icon svg {
-            width: 28px;
-            height: 28px;
-            fill: var(--acento);
-            margin-left: 4px;
-        }
-
-        .video-placeholder p {
-            font-size: 0.9rem;
-            opacity: 0.8;
-            text-align: center;
-            padding: 0 1rem;
-        }
-
-        /* instrucciones video */
-        .video-instructions {
-            max-width: 700px;
-            margin: 1.5rem auto 0;
-            background: white;
-            border-radius: 16px;
-            padding: 1.4rem 2rem;
-            border: 1px dashed var(--rosa2);
-            font-size: 0.85rem;
-            color: #9b6b85;
-            line-height: 1.7;
-        }
-
-        .video-instructions strong {
-            color: var(--acento);
-        }
-
-        .video-instructions code {
-            background: #fde8f0;
-            padding: 0.1rem 0.4rem;
-            border-radius: 4px;
-            font-size: 0.8rem;
-        }
-
         /* ── COLLAGE ── */
         .collage-section {
             background: var(--crema);
@@ -337,30 +270,12 @@
         }
 
         .photo-slot img {
+            position: absolute;
+            inset: 0;
             width: 100%;
             height: 100%;
             object-fit: cover;
             display: block;
-        }
-
-        /* placeholder cuando no hay foto */
-        .photo-slot .ph {
-            position: absolute;
-            inset: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            color: var(--acento);
-            opacity: 0.6;
-            font-size: 0.75rem;
-            text-align: center;
-            padding: 1rem;
-        }
-
-        .photo-slot .ph .icon {
-            font-size: 2.2rem;
         }
 
         .photo-slot .caption {
@@ -613,47 +528,11 @@
         <h2 class="section-title reveal">Un video para ti</h2>
         <span class="section-divider reveal"></span>
 
-        <div class="video-wrapper reveal" id="videoWrapper">
-            <!--
-      INSTRUCCIONES: Reemplaza este bloque con tu video.
-        
-      OPCIÓN A — Archivo local (video.mp4 en la misma carpeta):
-            -->
-        <video controls autoplay style="width:100%;display:block;">
-          <source src="video.mp4" type="video/mp4"/>
-        </video>
-<!--
-      OPCIÓN B — YouTube embed (reemplaza VIDEO_ID):
-        <iframe style="width:100%;aspect-ratio:16/9;border:none;"
-          src="https://www.youtube.com/embed/VIDEO_ID?autoplay=1"
-          allow="autoplay; encrypted-media" allowfullscreen></iframe>
-
-      OPCIÓN C — Google Drive (reemplaza FILE_ID):
-        <iframe style="width:100%;aspect-ratio:16/9;border:none;"
-          src="https://drive.google.com/file/d/FILE_ID/preview"
-          allow="autoplay" allowfullscreen></iframe>
-
-      Mientras tanto, se muestra este placeholder:
-    -->
-            <div class="video-placeholder" id="videoPlaceholder">
-                <div class="play-icon" onclick="alert('¡Agrega tu video aquí! Lee las instrucciones debajo 💕')">
-                    <svg viewBox="0 0 24 24">
-                        <path d="M8 5v14l11-7z" />
-                    </svg>
-                </div>
-                <p>🎬 Tu video de 1 minuto irá aquí<br />
-                    <small>Reemplaza este bloque con el embed de tu video</small>
-                </p>
-            </div>
-        </div>
-
-        <div class="video-instructions reveal">
-            <strong>📌 Cómo agregar tu video:</strong><br />
-            Abre el archivo <code>index.html</code> en un editor de texto y busca el bloque
-            <code>&lt;!-- INSTRUCCIONES --&gt;</code>.
-            Elige una de las tres opciones comentadas (archivo local, YouTube o Google Drive) y pégala en lugar del
-            <code>&lt;div class="video-placeholder"&gt;</code>.
-            Guarda y sube a GitHub. ¡Listo! 🎉
+        <div class="video-wrapper reveal">
+            <video controls style="width:100%;display:block;">
+                <source src="video.mp4" type="video/mp4"/>
+                Tu navegador no soporta video HTML5.
+            </video>
         </div>
     </section>
 
@@ -663,64 +542,62 @@
         <h2 class="section-title reveal">Collage de recuerdos</h2>
         <span class="section-divider reveal"></span>
 
-        <!--
-    INSTRUCCIONES COLLAGE:
-    Crea una carpeta llamada "fotos/" junto al index.html.
-    Sube tus fotos y reemplaza foto1.jpg, foto2.jpg, etc. con los nombres reales.
-    También puedes cambiar el texto de cada caption.
-  -->
         <div class="collage-grid reveal">
 
-            <!-- Foto grande destacada (2×2) -->
+            <!-- Fila 1: grande (2×2) + 2 pequeñas -->
             <div class="photo-slot big">
-                <img src="fotos/foto1.jpg" alt="Foto 1" onerror="this.style.display='none'" />
-                <div class="ph"><span class="icon">📷</span>foto1.jpg<br /><small>Pon tu foto aquí</small></div>
+                <img src="fotos/foto1.jpg" alt="Momento especial"/>
                 <div class="caption">Nuestra foto favorita 🌸</div>
             </div>
-
-            <!-- Fila derecha -->
             <div class="photo-slot">
-                <img src="fotos/foto2.jpg" alt="Foto 2" onerror="this.style.display='none'" />
-                <div class="ph"><span class="icon">📷</span>foto2.jpg</div>
+                <img src="fotos/foto2.jpg" alt="Momento especial"/>
                 <div class="caption">Momentos únicos 💕</div>
             </div>
-
             <div class="photo-slot">
-                <img src="fotos/foto3.jpg" alt="Foto 3" onerror="this.style.display='none'" />
-                <div class="ph"><span class="icon">📷</span>foto3.jpg</div>
+                <img src="fotos/foto3.jpg" alt="Momento especial"/>
                 <div class="caption">Sonrisas que iluminan 🌟</div>
             </div>
 
-            <!-- Segunda fila -->
+            <!-- Fila 2: ancha (2) + 1 -->
             <div class="photo-slot wide">
-                <img src="fotos/foto4.jpg" alt="Foto 4" onerror="this.style.display='none'" />
-                <div class="ph"><span class="icon">📷</span>foto4.jpg</div>
+                <img src="fotos/foto4.jpg" alt="Momento especial"/>
                 <div class="caption">El mejor dúo del mundo 👶❤️</div>
             </div>
-
             <div class="photo-slot">
-                <img src="fotos/foto5.jpg" alt="Foto 5" onerror="this.style.display='none'" />
-                <div class="ph"><span class="icon">📷</span>foto5.jpg</div>
+                <img src="fotos/foto5.jpg" alt="Momento especial"/>
                 <div class="caption">Amor puro ✨</div>
             </div>
 
-            <!-- Tercera fila -->
+            <!-- Fila 3: 1 + tall (×2) + 1 -->
             <div class="photo-slot">
-                <img src="fotos/foto6.jpg" alt="Foto 6" onerror="this.style.display='none'" />
-                <div class="ph"><span class="icon">📷</span>foto6.jpg</div>
+                <img src="fotos/foto6.jpg" alt="Momento especial"/>
                 <div class="caption">Cada día, juntos 🌸</div>
             </div>
-
             <div class="photo-slot tall">
-                <img src="fotos/foto7.jpg" alt="Foto 7" onerror="this.style.display='none'" />
-                <div class="ph"><span class="icon">📷</span>foto7.jpg</div>
+                <img src="fotos/foto7.jpg" alt="Momento especial"/>
                 <div class="caption">Crecer a tu lado 🌱</div>
             </div>
-
             <div class="photo-slot">
-                <img src="fotos/foto8.jpg" alt="Foto 8" onerror="this.style.display='none'" />
-                <div class="ph"><span class="icon">📷</span>foto8.jpg</div>
+                <img src="fotos/foto8.jpg" alt="Momento especial"/>
                 <div class="caption">Familia, siempre 💖</div>
+            </div>
+
+            <!-- Fila 4: 3 pequeñas extra para llegar a 12 -->
+            <div class="photo-slot">
+                <img src="fotos/foto9.jpg" alt="Momento especial"/>
+                <div class="caption">Tu abrazo lo es todo 🤗</div>
+            </div>
+            <div class="photo-slot">
+                <img src="fotos/foto10.jpg" alt="Momento especial"/>
+                <div class="caption">Juntos somos más 💗</div>
+            </div>
+            <div class="photo-slot wide">
+                <img src="fotos/foto11.jpg" alt="Momento especial"/>
+                <div class="caption">Memorias que duran para siempre 🌺</div>
+            </div>
+            <div class="photo-slot big">
+                <img src="fotos/foto12.jpg" alt="Momento especial"/>
+                <div class="caption">Lo más bonito de la vida 💖</div>
             </div>
 
         </div>
