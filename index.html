@@ -451,26 +451,124 @@
             transform: translateY(0);
         }
 
-        /* ── RESPONSIVE ── */
-        @media (max-width: 600px) {
+        /* ── RESPONSIVE MÓVIL ── */
+        @media (max-width: 768px) {
+
+            /* Secciones con menos padding */
+            section {
+                padding: 3rem 1rem;
+            }
+
+            /* Hero */
+            .hero {
+                padding: 2rem 1.2rem;
+                min-height: 100svh;
+            }
+
+            .hero h1 {
+                font-size: clamp(2rem, 10vw, 3rem);
+            }
+
+            .hero-sub {
+                font-size: 0.95rem;
+            }
+
+            /* Mensaje */
+            .message-card {
+                padding: 1.8rem 1.2rem;
+                border-radius: 16px;
+            }
+
+            .message-card::before {
+                font-size: 5rem;
+                top: -0.2rem;
+                left: 0.8rem;
+            }
+
+            .message-card p {
+                font-size: 0.97rem;
+            }
+
+            /* Video: sin border-radius exagerado en móvil */
+            .video-wrapper {
+                border-radius: 14px;
+                margin: 0 0.2rem;
+            }
+
+            /* Collage: 2 columnas simples, sin spans complejos */
             .collage-grid {
                 grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
             }
 
-            .collage-grid .big {
-                grid-column: span 2;
-            }
-
+            /* Resetear todos los spans especiales en móvil */
+            .collage-grid .big,
+            .collage-grid .wide,
             .collage-grid .tall {
+                grid-column: span 1;
                 grid-row: span 1;
             }
 
-            .collage-grid .wide {
-                grid-column: span 2;
+            /* Las fotos deben tener altura fija para que se vean bien */
+            .photo-slot {
+                min-height: 130px;
+                border-radius: 12px;
             }
 
-            .message-card {
-                padding: 2rem 1.5rem;
+            /* Captions visibles en touch (sin hover en móvil) */
+            .photo-slot .caption {
+                opacity: 1;
+                font-size: 0.68rem;
+                padding: 1rem 0.5rem 0.5rem;
+            }
+
+            /* Cualidades: 2 columnas en móvil */
+            .qualities-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 0.8rem;
+            }
+
+            .quality-card {
+                padding: 1.4rem 1rem;
+                border-radius: 14px;
+            }
+
+            .quality-card .emoji {
+                font-size: 1.8rem;
+            }
+
+            .quality-card h3 {
+                font-size: 0.95rem;
+            }
+
+            .quality-card p {
+                font-size: 0.8rem;
+            }
+
+            /* Cierre */
+            .closing-section .big-text {
+                font-size: 1.2rem;
+                padding: 0 0.5rem;
+            }
+
+            /* Títulos de sección */
+            .section-title {
+                font-size: 1.6rem;
+            }
+        }
+
+        /* Pantallas muy pequeñas (< 380px) */
+        @media (max-width: 380px) {
+            .qualities-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero h1 {
+                font-size: 1.9rem;
+            }
+
+            .photo-slot {
+                min-height: 110px;
             }
         }
     </style>
@@ -530,9 +628,9 @@
 
         <div class="video-wrapper reveal">
             <iframe
-                src="https://drive.google.com/file/d/1v3BmgK4EJHs5uAT23l9oDCbi7R6IjUgy/preview"
+                src="https://www.youtube.com/embed/u8m6ElGBj0o?rel=0"
                 style="width:100%;aspect-ratio:16/9;border:none;display:block;"
-                allow="autoplay"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowfullscreen>
             </iframe>
         </div>
@@ -540,7 +638,7 @@
 
     <!-- ══════════ COLLAGE ══════════ -->
     <section class="collage-section">
-        <p class="section-label reveal">Momentos para atesorar</p>
+        <p class="section-label reveal">Momentos que atesoro</p>
         <h2 class="section-title reveal">Collage de recuerdos</h2>
         <span class="section-divider reveal"></span>
 
