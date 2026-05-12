@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Para ti, mamá de Pleitito 🌸</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Lato:wght@300;400&display=swap"
+        rel="stylesheet" />
+    <style>
+        :root {
+            --rosa: #f9c6d0;
+            --rosa2: #f4a7b9;
+            --lila: #e8d5f5;
+            --crema: #fff8f3;
+            --durazno: #fde8d8;
+            --verde: #d4edda;
+            --texto: #6b4c5e;
+            --acento: #c9637a;
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Lato', sans-serif;
+            background: var(--crema);
+            color: var(--texto);
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* ── PÉTALOS ANIMADOS ── */
+        #petals-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* ── HERO ── */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem;
+            background: linear-gradient(160deg, #ffe4ec 0%, #f9d5e5 40%, #ecdaf5 100%);
+            z-index: 1;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: white;
+            border: 1.5px solid var(--rosa2);
+            border-radius: 50px;
+            padding: 0.4rem 1.4rem;
+            font-size: 0.78rem;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--acento);
+            margin-bottom: 1.8rem;
+            animation: fadeDown 1s ease both;
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.4rem, 7vw, 5rem);
+            font-weight: 600;
+            line-height: 1.15;
+            color: var(--acento);
+            animation: fadeDown 1.2s ease both;
+            animation-delay: 0.2s;
+        }
+
+        .hero h1 span {
+            font-style: italic;
+            color: #a0537a;
+        }
+
+        .hero-sub {
+            margin-top: 1.2rem;
+            font-size: 1.05rem;
+            font-weight: 300;
+            color: #9b6b85;
+            max-width: 480px;
+            line-height: 1.7;
+            animation: fadeDown 1.4s ease both;
+            animation-delay: 0.4s;
+        }
+
+        .scroll-hint {
+            margin-top: 3rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.4rem;
+            animation: fadeDown 1.6s ease both;
+            animation-delay: 0.8s;
+            color: var(--acento);
+            opacity: 0.7;
+            font-size: 0.8rem;
+            letter-spacing: 0.1em;
+        }
+
+        .scroll-hint .arrow {
+            width: 20px;
+            height: 20px;
+            border-right: 2px solid var(--acento);
+            border-bottom: 2px solid var(--acento);
+            transform: rotate(45deg);
+            animation: bounce 1.4s infinite;
+        }
+
+        /* ── SECCIÓN GENÉRICA ── */
+        section {
+            position: relative;
+            z-index: 1;
+            padding: 5rem 1.5rem;
+        }
+
+        .section-label {
+            text-align: center;
+            font-size: 0.72rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--acento);
+            margin-bottom: 0.6rem;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.8rem, 4vw, 2.8rem);
+            text-align: center;
+            color: var(--acento);
+            margin-bottom: 0.5rem;
+        }
+
+        .section-divider {
+            display: block;
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--rosa2), var(--lila));
+            border-radius: 10px;
+            margin: 0.8rem auto 2.5rem;
+        }
+
+        /* ── MENSAJE PRINCIPAL ── */
+        .message-section {
+            background: white;
+        }
+
+        .message-card {
+            max-width: 720px;
+            margin: 0 auto;
+            background: linear-gradient(135deg, #fff8fb, #f5eaff);
+            border: 1px solid #f0d5e8;
+            border-radius: 24px;
+            padding: 3rem 3.5rem;
+            box-shadow: 0 8px 40px rgba(201, 99, 122, 0.08);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .message-card::before {
+            content: '❝';
+            position: absolute;
+            top: -0.5rem;
+            left: 1.5rem;
+            font-size: 8rem;
+            color: var(--rosa);
+            font-family: 'Playfair Display', serif;
+            line-height: 1;
+            opacity: 0.5;
+        }
+
+        .message-card p {
+            font-size: 1.08rem;
+            line-height: 1.9;
+            color: #7d5570;
+            position: relative;
+            z-index: 1;
+        }
+
+        .message-card p+p {
+            margin-top: 1.2rem;
+        }
+
+        .message-card .firma {
+            margin-top: 2rem;
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: 1.1rem;
+            color: var(--acento);
+            text-align: right;
+        }
+
+        /* ── VIDEO ── */
+        .video-section {
+            background: linear-gradient(160deg, #f5dde8 0%, #e8d4f5 100%);
+        }
+
+        .video-wrapper {
+            max-width: 700px;
+            margin: 0 auto;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(160, 83, 122, 0.25);
+            background: black;
+            position: relative;
+        }
+
+        .video-placeholder {
+            width: 100%;
+            aspect-ratio: 16/9;
+            background: linear-gradient(135deg, #f9c6d0 0%, #e8d5f5 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            color: var(--acento);
+        }
+
+        .video-placeholder .play-icon {
+            width: 72px;
+            height: 72px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 20px rgba(201, 99, 122, 0.3);
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .video-placeholder .play-icon:hover {
+            transform: scale(1.08);
+        }
+
+        .video-placeholder .play-icon svg {
+            width: 28px;
+            height: 28px;
+            fill: var(--acento);
+            margin-left: 4px;
+        }
+
+        .video-placeholder p {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            text-align: center;
+            padding: 0 1rem;
+        }
+
+        /* instrucciones video */
+        .video-instructions {
+            max-width: 700px;
+            margin: 1.5rem auto 0;
+            background: white;
+            border-radius: 16px;
+            padding: 1.4rem 2rem;
+            border: 1px dashed var(--rosa2);
+            font-size: 0.85rem;
+            color: #9b6b85;
+            line-height: 1.7;
+        }
+
+        .video-instructions strong {
+            color: var(--acento);
+        }
+
+        .video-instructions code {
+            background: #fde8f0;
+            padding: 0.1rem 0.4rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+        }
+
+        /* ── COLLAGE ── */
+        .collage-section {
+            background: var(--crema);
+        }
+
+        .collage-grid {
+            max-width: 960px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: auto;
+            gap: 16px;
+        }
+
+        /* Celdas especiales */
+        .collage-grid .big {
+            grid-column: span 2;
+            grid-row: span 2;
+        }
+
+        .collage-grid .tall {
+            grid-row: span 2;
+        }
+
+        .collage-grid .wide {
+            grid-column: span 2;
+        }
+
+        .photo-slot {
+            border-radius: 18px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 6px 24px rgba(160, 83, 122, 0.15);
+            background: linear-gradient(135deg, #fde4ec, #ecdaf5);
+            min-height: 160px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .photo-slot:hover {
+            transform: scale(1.025) rotate(-0.5deg);
+            box-shadow: 0 12px 36px rgba(160, 83, 122, 0.25);
+        }
+
+        .photo-slot img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* placeholder cuando no hay foto */
+        .photo-slot .ph {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            color: var(--acento);
+            opacity: 0.6;
+            font-size: 0.75rem;
+            text-align: center;
+            padding: 1rem;
+        }
+
+        .photo-slot .ph .icon {
+            font-size: 2.2rem;
+        }
+
+        .photo-slot .caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(160, 83, 122, 0.5));
+            color: white;
+            padding: 1.2rem 0.8rem 0.7rem;
+            font-size: 0.75rem;
+            font-style: italic;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .photo-slot:hover .caption {
+            opacity: 1;
+        }
+
+        /* ── TARJETAS DE CUALIDADES ── */
+        .qualities-section {
+            background: linear-gradient(160deg, #fde4ec 0%, #ecdaf5 100%);
+        }
+
+        .qualities-grid {
+            max-width: 860px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.4rem;
+        }
+
+        .quality-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem 1.5rem;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(201, 99, 122, 0.08);
+            transition: transform 0.3s;
+        }
+
+        .quality-card:hover {
+            transform: translateY(-6px);
+        }
+
+        .quality-card .emoji {
+            font-size: 2.4rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .quality-card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            color: var(--acento);
+            margin-bottom: 0.5rem;
+        }
+
+        .quality-card p {
+            font-size: 0.88rem;
+            color: #9b6b85;
+            line-height: 1.65;
+        }
+
+        /* ── CLOSING ── */
+        .closing-section {
+            background: white;
+            text-align: center;
+        }
+
+        .closing-heart {
+            font-size: 4rem;
+            animation: heartbeat 1.2s ease-in-out infinite;
+            display: block;
+            margin-bottom: 1rem;
+        }
+
+        .closing-section .big-text {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.4rem, 3.5vw, 2.2rem);
+            color: var(--acento);
+            max-width: 600px;
+            margin: 0 auto 1.5rem;
+            line-height: 1.5;
+            font-style: italic;
+        }
+
+        .closing-section .from {
+            font-size: 1rem;
+            color: #9b6b85;
+            font-weight: 300;
+            letter-spacing: 0.05em;
+        }
+
+        .closing-section .from strong {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-weight: 400;
+            font-size: 1.15rem;
+            color: var(--acento);
+        }
+
+        /* ── FOOTER ── */
+        footer {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            padding: 2rem;
+            background: linear-gradient(to right, #f9c6d0, #e8d5f5);
+            font-size: 0.8rem;
+            color: #a07090;
+        }
+
+        /* ── ANIMACIONES ── */
+        @keyframes fadeDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes bounce {
+
+            0%,
+            100% {
+                transform: rotate(45deg) translateY(0);
+            }
+
+            50% {
+                transform: rotate(45deg) translateY(6px);
+            }
+        }
+
+        @keyframes heartbeat {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            14% {
+                transform: scale(1.15);
+            }
+
+            28% {
+                transform: scale(1);
+            }
+
+            42% {
+                transform: scale(1.1);
+            }
+
+            70% {
+                transform: scale(1);
+            }
+        }
+
+        /* ── REVEAL ON SCROLL ── */
+        .reveal {
+            opacity: 0;
+            transform: translateY(32px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 600px) {
+            .collage-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .collage-grid .big {
+                grid-column: span 2;
+            }
+
+            .collage-grid .tall {
+                grid-row: span 1;
+            }
+
+            .collage-grid .wide {
+                grid-column: span 2;
+            }
+
+            .message-card {
+                padding: 2rem 1.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- CANVAS PÉTALOS -->
+    <canvas id="petals-canvas"></canvas>
+
+    <!-- ══════════ HERO ══════════ -->
+    <div class="hero">
+        <div class="hero-badge">🌸 Día de la Madre · 2025</div>
+        <h1>Para ti,<br /><span>mamita de Leito</span></h1>
+        <p class="hero-sub">Con todo el cariño del mundo, porque eres una persona extraordinaria que merece ser
+            celebrada hoy y siempre.</p>
+        <div class="scroll-hint">
+            <span>Baja para ver la sorpresa</span>
+            <div class="arrow"></div>
+        </div>
+    </div>
+
+    <!-- ══════════ MENSAJE ══════════ -->
+    <section class="message-section">
+        <p class="section-label reveal">Desde el corazón</p>
+        <h2 class="section-title reveal">Un mensaje especial para vos</h2>
+        <span class="section-divider reveal"></span>
+
+        <div class="message-card reveal">
+            <p>
+                Aunque hemos tenido nuestras dificultades, recuerdo todo lo bonito que se ha compartido y lo valoro con
+                el
+                corazón, gracias por estar ahi con tu ser y con todo ello; además, hay algo que permanece intacto: el
+                profundo aprecio y el
+                respeto que te tengo. Gracias por ser la mamá que eres, por cada madrugada, cada abrazo, cada "ya va a
+                estar bien" que le das a nuestro hijito.
+            </p>
+            <p>
+                Lo ves crecer con esos ojos llenos de amor, le das tu tiempo, tu paciencia y tu corazón partido en dos.
+                Y eso, créeme, <em>no pasa desapercibido</em>. Leito tiene una mamá que lo ama y daria todo
+                absolutamente
+                por este pequeñito ser de luz.
+            </p>
+            <p>
+                Hoy quiero que sepas que tu esfuerzo se ve. Que tu dedicación importa. Que eres una mujer increíble, no
+                solo como madre, sino como persona. Este pequeño video es mi forma de decirte gracias, de corazón.
+            </p>
+            <p class="firma">— Con cariño Barri</p>
+        </div>
+    </section>
+
+    <!-- ══════════ VIDEO ══════════ -->
+    <section class="video-section">
+        <p class="section-label reveal">La sorpresa</p>
+        <h2 class="section-title reveal">Un video para ti</h2>
+        <span class="section-divider reveal"></span>
+
+        <div class="video-wrapper reveal" id="videoWrapper">
+            <!--
+      INSTRUCCIONES: Reemplaza este bloque con tu video.
+
+      OPCIÓN A — Archivo local (video.mp4 en la misma carpeta):
+        <video controls autoplay style="width:100%;display:block;">
+          <source src="video.mp4" type="video/mp4"/>
+        </video>
+
+      OPCIÓN B — YouTube embed (reemplaza VIDEO_ID):
+        <iframe style="width:100%;aspect-ratio:16/9;border:none;"
+          src="https://www.youtube.com/embed/VIDEO_ID?autoplay=1"
+          allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+      OPCIÓN C — Google Drive (reemplaza FILE_ID):
+        <iframe style="width:100%;aspect-ratio:16/9;border:none;"
+          src="https://drive.google.com/file/d/FILE_ID/preview"
+          allow="autoplay" allowfullscreen></iframe>
+
+      Mientras tanto, se muestra este placeholder:
+    -->
+            <div class="video-placeholder" id="videoPlaceholder">
+                <div class="play-icon" onclick="alert('¡Agrega tu video aquí! Lee las instrucciones debajo 💕')">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M8 5v14l11-7z" />
+                    </svg>
+                </div>
+                <p>🎬 Tu video de 1 minuto irá aquí<br />
+                    <small>Reemplaza este bloque con el embed de tu video</small>
+                </p>
+            </div>
+        </div>
+
+        <div class="video-instructions reveal">
+            <strong>📌 Cómo agregar tu video:</strong><br />
+            Abre el archivo <code>index.html</code> en un editor de texto y busca el bloque
+            <code>&lt;!-- INSTRUCCIONES --&gt;</code>.
+            Elige una de las tres opciones comentadas (archivo local, YouTube o Google Drive) y pégala en lugar del
+            <code>&lt;div class="video-placeholder"&gt;</code>.
+            Guarda y sube a GitHub. ¡Listo! 🎉
+        </div>
+    </section>
+
+    <!-- ══════════ COLLAGE ══════════ -->
+    <section class="collage-section">
+        <p class="section-label reveal">Momentos que atesoro</p>
+        <h2 class="section-title reveal">Collage de recuerdos</h2>
+        <span class="section-divider reveal"></span>
+
+        <!--
+    INSTRUCCIONES COLLAGE:
+    Crea una carpeta llamada "fotos/" junto al index.html.
+    Sube tus fotos y reemplaza foto1.jpg, foto2.jpg, etc. con los nombres reales.
+    También puedes cambiar el texto de cada caption.
+  -->
+        <div class="collage-grid reveal">
+
+            <!-- Foto grande destacada (2×2) -->
+            <div class="photo-slot big">
+                <img src="fotos/foto1.jpg" alt="Foto 1" onerror="this.style.display='none'" />
+                <div class="ph"><span class="icon">📷</span>foto1.jpg<br /><small>Pon tu foto aquí</small></div>
+                <div class="caption">Nuestra foto favorita 🌸</div>
+            </div>
+
+            <!-- Fila derecha -->
+            <div class="photo-slot">
+                <img src="fotos/foto2.jpg" alt="Foto 2" onerror="this.style.display='none'" />
+                <div class="ph"><span class="icon">📷</span>foto2.jpg</div>
+                <div class="caption">Momentos únicos 💕</div>
+            </div>
+
+            <div class="photo-slot">
+                <img src="fotos/foto3.jpg" alt="Foto 3" onerror="this.style.display='none'" />
+                <div class="ph"><span class="icon">📷</span>foto3.jpg</div>
+                <div class="caption">Sonrisas que iluminan 🌟</div>
+            </div>
+
+            <!-- Segunda fila -->
+            <div class="photo-slot wide">
+                <img src="fotos/foto4.jpg" alt="Foto 4" onerror="this.style.display='none'" />
+                <div class="ph"><span class="icon">📷</span>foto4.jpg</div>
+                <div class="caption">El mejor dúo del mundo 👶❤️</div>
+            </div>
+
+            <div class="photo-slot">
+                <img src="fotos/foto5.jpg" alt="Foto 5" onerror="this.style.display='none'" />
+                <div class="ph"><span class="icon">📷</span>foto5.jpg</div>
+                <div class="caption">Amor puro ✨</div>
+            </div>
+
+            <!-- Tercera fila -->
+            <div class="photo-slot">
+                <img src="fotos/foto6.jpg" alt="Foto 6" onerror="this.style.display='none'" />
+                <div class="ph"><span class="icon">📷</span>foto6.jpg</div>
+                <div class="caption">Cada día, juntos 🌸</div>
+            </div>
+
+            <div class="photo-slot tall">
+                <img src="fotos/foto7.jpg" alt="Foto 7" onerror="this.style.display='none'" />
+                <div class="ph"><span class="icon">📷</span>foto7.jpg</div>
+                <div class="caption">Crecer a tu lado 🌱</div>
+            </div>
+
+            <div class="photo-slot">
+                <img src="fotos/foto8.jpg" alt="Foto 8" onerror="this.style.display='none'" />
+                <div class="ph"><span class="icon">📷</span>foto8.jpg</div>
+                <div class="caption">Familia, siempre 💖</div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ══════════ CUALIDADES ══════════ -->
+    <section class="qualities-section">
+        <p class="section-label reveal">Lo que la hace especial</p>
+        <h2 class="section-title reveal">Por qué eres increíble</h2>
+        <span class="section-divider reveal"></span>
+
+        <div class="qualities-grid">
+            <div class="quality-card reveal">
+                <div class="emoji">💪</div>
+                <h3>Fortaleza</h3>
+                <p>Enfrentas cada reto con una valentía que admiro. Pleitito tiene en ti un ejemplo de vida.</p>
+            </div>
+            <div class="quality-card reveal">
+                <div class="emoji">❤️</div>
+                <h3>Amor infinito</h3>
+                <p>Tu amor por él no tiene límites ni condiciones. Eso es lo más hermoso que existe.</p>
+            </div>
+            <div class="quality-card reveal">
+                <div class="emoji">🌙</div>
+                <h3>Dedicación</h3>
+                <p>Noches largas, días agotadores… y siempre con una sonrisa lista para él. Eso no es poco.</p>
+            </div>
+            <div class="quality-card reveal">
+                <div class="emoji">✨</div>
+                <h3>Maravillosa persona</h3>
+                <p>Más allá de ser mamá, eres una persona extraordinaria que irradia bondad y calidez.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ══════════ CIERRE ══════════ -->
+    <section class="closing-section">
+        <span class="closing-heart">💗</span>
+        <p class="big-text reveal">
+            "Feliz Día de la Madre. Gracias por todo lo que haces, por quien eres, y por el amor que le das a nuestro
+            hijo."
+        </p>
+        <p class="from reveal">Con cariño y gratitud eterna,<br />
+            <strong>El papá de Leito 🌸</strong>
+        </p>
+    </section>
+
+    <!-- ══════════ FOOTER ══════════ -->
+    <footer>
+        Hecho con amor · Día de la Madre 2025 🌸
+    </footer>
+
+    <!-- ══════════ SCRIPTS ══════════ -->
+    <script>
+        /* ---------- PÉTALOS ---------- */
+        const canvas = document.getElementById('petals-canvas');
+        const ctx = canvas.getContext('2d');
+
+        function resize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        const COLORS = ['#f9c6d0', '#f4a7b9', '#e8d5f5', '#fde8d8', '#ffd6e0', '#f0c4de'];
+        const PETALS = 38;
+
+        const petals = Array.from({ length: PETALS }, () => ({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height - canvas.height,
+            r: 7 + Math.random() * 10,
+            color: COLORS[Math.floor(Math.random() * COLORS.length)],
+            speed: 0.8 + Math.random() * 1.4,
+            drift: (Math.random() - 0.5) * 0.6,
+            angle: Math.random() * Math.PI * 2,
+            spin: (Math.random() - 0.5) * 0.04,
+            opacity: 0.5 + Math.random() * 0.45,
+        }));
+
+        function drawPetal(p) {
+            ctx.save();
+            ctx.translate(p.x, p.y);
+            ctx.rotate(p.angle);
+            ctx.globalAlpha = p.opacity;
+            ctx.fillStyle = p.color;
+            ctx.beginPath();
+            ctx.ellipse(0, 0, p.r, p.r * 1.6, 0, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.restore();
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            petals.forEach(p => {
+                p.y += p.speed;
+                p.x += p.drift;
+                p.angle += p.spin;
+                if (p.y > canvas.height + 20) {
+                    p.y = -20;
+                    p.x = Math.random() * canvas.width;
+                }
+                drawPetal(p);
+            });
+            requestAnimationFrame(animate);
+        }
+        animate();
+
+        /* ---------- REVEAL ON SCROLL ---------- */
+        const reveals = document.querySelectorAll('.reveal');
+        const io = new IntersectionObserver(entries => {
+            entries.forEach(e => {
+                if (e.isIntersecting) {
+                    e.target.classList.add('visible');
+                    io.unobserve(e.target);
+                }
+            });
+        }, { threshold: 0.12 });
+        reveals.forEach(el => io.observe(el));
+    </script>
+</body>
+
+</html>
